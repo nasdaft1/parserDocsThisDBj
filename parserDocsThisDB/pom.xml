@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.pro_intercom</groupId>
+  <artifactId>parserDocsThisDB</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>parserDocsThisDB</name>
+  
+  <dependencies>
+	<!-- https://mvnrepository.com/artifact/org.ini4j/ini4j продвинутый парсер ini файлов -->
+	<dependency>
+    	<groupId>org.ini4j</groupId>
+    	<artifactId>ini4j</artifactId>
+    	<version>0.5.1</version>
+	</dependency>
+  <!-- https://mvnrepository.com/artifact/org.firebirdsql.jdbc/jaybird работа с firebird-->
+	<dependency>
+    	<groupId>org.firebirdsql.jdbc</groupId>
+    	<artifactId>jaybird</artifactId>
+    	<version>4.0.3.java11</version>
+    	<scope>provided</scope>
+	</dependency>
+
+  </dependencies>
+</project>
