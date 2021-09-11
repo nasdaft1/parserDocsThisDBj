@@ -75,9 +75,9 @@ public class work_db_fdb {
         //# в зависимости от типа data_phones[0] устанавливаем приставку с типом к телефону
         while (data_phones_list.next()) {	
         	int data_phones_index = data_phones_list.getInt(1);
-            if (data_phones_index == 1) {phone_all += "  " + data_phones_list.getString(2) + "\n";}
-            if (data_phones_index == 3) {phone_all += "р." + data_phones_list.getString(2) + "\n";}
-            if (data_phones_index == 4) {phone_all += "c." + data_phones_list.getString(2) + "\n";}
+            if (data_phones_index == 1) {phone_all += "  " + dbClone1.redo_and_check(data_phones_list,2) + "\n";} 
+            if (data_phones_index == 3) {phone_all += "р." + dbClone1.redo_and_check(data_phones_list,2) + "\n";}
+            if (data_phones_index == 4) {phone_all += "c." + dbClone1.redo_and_check(data_phones_list,2) + "\n";}
             int lenght_string_allPhone = phone_all.length(); // определение длины строки со списком телефонов phone_all
             if (lenght_string_allPhone < 1) {lenght_string_allPhone = 1;} // substring(0, - 1) убираем ошибку и заменяем substring(0, 0) 
             data_dictionary.put("phone"+String.valueOf(line), phone_all.substring(0, lenght_string_allPhone - 1)); // удаляем последний символ \n
@@ -99,7 +99,8 @@ public class work_db_fdb {
         while (data_human.next()) {
             ++line;
             // словарь добавляется фамилия имя отческтво человека
-        	data_dictionary.put("name"+     String.valueOf(line), (db.redo_and_check(data_human ,1) + " " + db.redo_and_check(data_human ,1) + " " + db.redo_and_check(data_human ,2)));
+        	data_dictionary.put("name"+     String.valueOf(line), (db.redo_and_check(data_human ,1) + " " 
+            + db.redo_and_check(data_human ,1) + " " + db.redo_and_check(data_human ,2)));
             data_dictionary.put("position"+ String.valueOf(line), db.redo_and_check(data_human ,9)); // словарь добавляется комментарий по человеку
             data_dictionary.put("address"+  String.valueOf(line), db.address_format(data_human ,4 ,5 ,6 ,7 ,8 ,10)); // словарь добавляется адрес человека
             index_phone = db.redo_and_check(data_human ,11);
@@ -116,8 +117,8 @@ public class work_db_fdb {
 	    data = db.requesting_data_list(command_SQL);
 	    while (data.next()) {
 	    	++line;
-	    	data_dictionary.put("Shn" + String.valueOf(line), data.getString(1)); // номер шлейфа
-	        data_dictionary.put("Shm" + String.valueOf(line), data.getString(2)); // описание шлейфа
+	    	data_dictionary.put("Shn" + String.valueOf(line), db.redo_and_check(data ,1)); // номер шлейфа  
+	        data_dictionary.put("Shm" + String.valueOf(line), db.redo_and_check(data ,2)); // описание шлейфа
 	        }
 	    }
 	

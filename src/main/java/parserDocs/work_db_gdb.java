@@ -23,22 +23,22 @@ public class work_db_gdb {
 		if (data == null) {
 			System.err.print("->карточка не найдена");
 			return false;}
-		data_id_name_object =  data.getString(14).trim(); // объект
+		data_id_name_object =  db.redo_and_check(data ,14); // объект
 		data_dictionary.put("card",     card);   //в словарь добавляется позывной объекта
-		data_dictionary.put("entrance",data.getString(7)); // подъезд
-		data_dictionary.put("floor",   data.getString(6)); // этаж
-		data_dictionary.put("cont",    data.getString(2).trim()); // номер договора
-		data_dictionary.put("phone",   data.getString(13).trim());// телефон закроссированный
-		id_key            = data.getString(1);   // id - для определение типа прибора, список сотрудников, список шлейфов
-		id_type_otp       = data.getString(11);  // id - для определение типа объекта
-		data_dictionary.put("memo1",(data.getString(9)).trim() + '\n' + (data.getString(10)).trim()); //характеристики объекта, уязвимости объекта
+		data_dictionary.put("entrance",db.redo_and_check(data ,7)); // подъезд 
+		data_dictionary.put("floor",   db.redo_and_check(data ,6)); // этаж
+		data_dictionary.put("cont",    db.redo_and_check(data ,2)); // номер договора
+		data_dictionary.put("phone",   db.redo_and_check(data ,13));// телефон закроссированный
+		id_key            = db.redo_and_check(data ,1);   // id - для определение типа прибора, список сотрудников, список шлейфов
+		id_type_otp       = db.redo_and_check(data ,11);  // id - для определение типа объекта
+		data_dictionary.put("memo1",db.redo_and_check(data ,9) + '\n' + db.redo_and_check(data ,10)); //характеристики объекта, уязвимости объекта
 		data_dictionary.put("address_object", db.address_format(data, 15, 4, 5, 12, 8)); // адрес объекта
 		return true;
 	}
 	
 	public void SelectOtp_name(SearchDB db) throws SQLException {
 		ResultSet data_type_object = db.requesting_data_one("select otp_name from  objtypes where otp_id=" + id_type_otp);
-		String data_type_object_naim = data_type_object.getString(1).trim().toUpperCase();
+		String data_type_object_naim = db.redo_and_check(data_type_object ,1).toUpperCase(); 
 		data_dictionary.put("type_object", data_type_object_naim);
 		if (data_type_object_naim.equals("КВАРТИРА") || data_type_object_naim.equals("МХЛИГ")) {
 		     //в словарь добавляется названание объекта для физического лица
@@ -54,10 +54,10 @@ public class work_db_gdb {
 		while (data.next()) {
 		    ++line;
 		  	String sLine =String.valueOf(line); // в словарь добавляется ФИО сотрудника
-		  	data_dictionary.put("name"+sLine     ,data.getString(3).trim() +" "+ data.getString(4).trim() + " " + data.getString(5).trim());
+		  	data_dictionary.put("name"+sLine     ,db.redo_and_check(data ,3) +" "+ db.redo_and_check(data ,4) + " " + db.redo_and_check(data ,5));
 			data_dictionary.put("position"+sLine ,db.redo_and_check(data ,10)); // в словарь добавляется комментарий по человеку
-			data_dictionary.put("address"+sLine  ,data.getString(8).trim());  // в словарь добавляется адрес человека
-			data_dictionary.put("phone"+sLine    ,data.getString(9).trim());  // в словарь добавляется телефон человека
+			data_dictionary.put("address"+sLine  ,db.redo_and_check(data ,8));  // в словарь добавляется адрес человека
+			data_dictionary.put("phone"+sLine    ,db.redo_and_check(data ,9));  // в словарь добавляется телефон человека
 			}
 		}
 	
@@ -65,7 +65,7 @@ public class work_db_gdb {
 		//создание списка с типом оконечного устройства
 		ResultSet data;
 		data = db.requesting_data_one("select uo.uo_name from  line, uo where uo.uo_ln_id = line.ln_id and line.ln_cr_key="+id_key);
-		data_dictionary.put("type_ou",data.getString(1).trim()); 
+		data_dictionary.put("type_ou",db.redo_and_check(data ,1)); 
 		}
 	
 	public void SelectObjects(SearchDB db) throws SQLException {
@@ -75,8 +75,10 @@ public class work_db_gdb {
 		while (data.next()) {
 		    ++line;
 		   	String sLine2 =String.valueOf(line);
-		    data_dictionary.put("Shn" + sLine2 ,String.valueOf(data.getInt(1)+1)); // номер шлейфа
-		    data_dictionary.put("Shm" + sLine2 , data.getString(2)); // описание шлейфа
+		    try  {
+		    	data_dictionary.put("Shn" + sLine2 ,String.valueOf(data.getInt(1)+1)); // номер шлейфа
+		    } catch(NumberFormatException nfe) {}
+		    data_dictionary.put("Shm" + sLine2 , db.redo_and_check(data ,2)); // описание шлейфа
 		    }
 		}
 	
