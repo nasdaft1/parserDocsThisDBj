@@ -17,27 +17,27 @@ public class main {
 		int separator = 0;
 		//String pult ="";
 		//String card ="";
-		String filepath = Paths.get("").toAbsolutePath().toString() + "\\src\\main\\resources\\"; //получение пути к рабочему каталогу
-		file_config    = filepath + file_config;   // добавляем путь к репозитарию + файл
-		file_executive = filepath + file_executive;// добавляем путь к репозитарию + файл
-		original_docx  = filepath + original_docx; // добавляем путь к репозитарию + файл
+		String filepath = Paths.get("").toAbsolutePath().toString() + "\\src\\main\\resources\\"; //РїРѕР»СѓС‡РµРЅРёРµ РїСѓС‚Рё Рє СЂР°Р±РѕС‡РµРјСѓ РєР°С‚Р°Р»РѕРіСѓ
+		file_config    = filepath + file_config;   // РґРѕР±Р°РІР»СЏРµРј РїСѓС‚СЊ Рє СЂРµРїРѕР·РёС‚Р°СЂРёСЋ + С„Р°Р№Р»
+		file_executive = filepath + file_executive;// РґРѕР±Р°РІР»СЏРµРј РїСѓС‚СЊ Рє СЂРµРїРѕР·РёС‚Р°СЂРёСЋ + С„Р°Р№Р»
+		original_docx  = filepath + original_docx; // РґРѕР±Р°РІР»СЏРµРј РїСѓС‚СЊ Рє СЂРµРїРѕР·РёС‚Р°СЂРёСЋ + С„Р°Р№Р»
 		try {
 			FileReader file = new FileReader(file_executive);
 			BufferedReader reader = new BufferedReader(file);
 			String line = reader.readLine();
 			Wini ini =new Wini();
-			ini.getConfig().setLowerCaseSection(true);//определяем перевод в прописные парсинга 1 аргумента
-			ini.getConfig().setLowerCaseOption(true); //определяем перевод в прописные парсинга 2 аргумента
-			ini.load(new File(file_config)); 		  //загружаем фаил 
+			ini.getConfig().setLowerCaseSection(true);//РѕРїСЂРµРґРµР»СЏРµРј РїРµСЂРµРІРѕРґ РІ РїСЂРѕРїРёСЃРЅС‹Рµ РїР°СЂСЃРёРЅРіР° 1 Р°СЂРіСѓРјРµРЅС‚Р°
+			ini.getConfig().setLowerCaseOption(true); //РѕРїСЂРµРґРµР»СЏРµРј РїРµСЂРµРІРѕРґ РІ РїСЂРѕРїРёСЃРЅС‹Рµ РїР°СЂСЃРёРЅРіР° 2 Р°СЂРіСѓРјРµРЅС‚Р°
+			ini.load(new File(file_config)); 		  //Р·Р°РіСЂСѓР¶Р°РµРј С„Р°РёР» 
 			data_viev sort_db = new data_viev(original_docx);
 			while(line!=null){
-				line = line.replace(" ", "").toLowerCase(); // убираем лишнии пробелы и переводит в прописные
-				separator = line.indexOf(','); //поиск запятой в строке
-				if (separator != -1) {		   //проверка на наличие зяпятой
-					String pult =line.substring(0,separator);                //получаем позывной пульта
-					String card = line.substring(separator+1,line.length()); //получекм номер карточки
+				line = line.replace(" ", "").toLowerCase(); // СѓР±РёСЂР°РµРј Р»РёС€РЅРёРё РїСЂРѕР±РµР»С‹ Рё РїРµСЂРµРІРѕРґРёС‚ РІ РїСЂРѕРїРёСЃРЅС‹Рµ
+				separator = line.indexOf(','); //РїРѕРёСЃРє Р·Р°РїСЏС‚РѕР№ РІ СЃС‚СЂРѕРєРµ
+				if (separator != -1) {		   //РїСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ Р·СЏРїСЏС‚РѕР№
+					String pult =line.substring(0,separator);                //РїРѕР»СѓС‡Р°РµРј РїРѕР·С‹РІРЅРѕР№ РїСѓР»СЊС‚Р°
+					String card = line.substring(separator+1,line.length()); //РїРѕР»СѓС‡РµРєРј РЅРѕРјРµСЂ РєР°СЂС‚РѕС‡РєРё
 					try {
-						int i = Integer.parseInt(card); //проверка для защиты от доступа к базе данных посторонними командами
+						int i = Integer.parseInt(card); //РїСЂРѕРІРµСЂРєР° РґР»СЏ Р·Р°С‰РёС‚С‹ РѕС‚ РґРѕСЃС‚СѓРїР° Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С… РїРѕСЃС‚РѕСЂРѕРЅРЅРёРјРё РєРѕРјР°РЅРґР°РјРё
 						String path_db = ini.get(pult , "ip_path_db");
 						String path_directories = ini.get(pult , "path_pult");
 						System.out.print("\n"+pult+"-"+card);
@@ -46,13 +46,13 @@ public class main {
 							if ((path_db!=null)||(path_directories!=null))  { 
 								//path_directories = path_directories.replace('/', '\\'); //
 								sort_db.viev_selection_(path_db, card, pult, filepath+path_directories);}
-							else {System.err.print("->некоректные данные в файле конфигурации "+ file_config +" ["+pult.toUpperCase() + "] ip_path_db или path_pult несодержат значений");}
+							else {System.err.print("->РЅРµРєРѕСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»Рµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё "+ file_config +" ["+pult.toUpperCase() + "] ip_path_db РёР»Рё path_pult РЅРµСЃРѕРґРµСЂР¶Р°С‚ Р·РЅР°С‡РµРЅРёР№");}
 						} catch (SQLException e) {e.printStackTrace();}
 						} catch(NumberFormatException e) {				
-							System.err.print( "\n" +pult+"-"+card+"-> номер пульта содержит посторонние знаки и символы");		
+							System.err.print( "\n" +pult+"-"+card+"-> РЅРѕРјРµСЂ РїСѓР»СЊС‚Р° СЃРѕРґРµСЂР¶РёС‚ РїРѕСЃС‚РѕСЂРѕРЅРЅРёРµ Р·РЅР°РєРё Рё СЃРёРјРІРѕР»С‹");		
 						}
 					}
-				line = reader.readLine();//читаем фаил file_executive
+				line = reader.readLine();//С‡РёС‚Р°РµРј С„Р°РёР» file_executive
 				}
 		} catch (IOException e) {System.out.println(e.toString());}
 	}

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import org.junit.Test;
 import parserDocs.SearchDB;
-import parserDocs.replaÒeTextDocs;
+import parserDocs.repla—ÅeTextDocs;
 
 public class parserDocsThisDB_test {
 	public static String name_in_file= "C:\\Users\\jax10\\eclipse-workspace\\helloapp\\word.docx";
@@ -23,13 +23,13 @@ public class parserDocsThisDB_test {
 	public void test_strSummText_one() {
 		//fail("Not yet implemented");
 		final String expected ="<w:t>{{Key_name10}}</w:t>"; 
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="<w:t>{{Key_name10}}</w:t>";
-		final String actual = replaÒeText.strSummText(inString);
+		final String actual = repla—ÅeText.strSummText(inString);
 		System.out.println(actual);
 		System.out.println(expected);
 		assertEquals(expected, actual);
-		//replaÒeText.strFindCorrect(name_in_file);
+		//repla—ÅeText.strFindCorrect(name_in_file);
 		//System.out.println(actual);
 	}
 	
@@ -37,9 +37,9 @@ public class parserDocsThisDB_test {
 	public void test_strSummText_several() {
 		//fail("Not yet implemented");
 		final String expected ="<w:t>{{Key_name11}}</w:t>"; 
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="<w:t>{{</w:t>123456<w:t>Key_name11</w:t>789<w:t>}}</w:t>";
-		final String actual = replaÒeText.strSummText(inString);
+		final String actual = repla—ÅeText.strSummText(inString);
 		assertEquals(expected, actual);
 		//System.out.println(actual);
 	}
@@ -50,10 +50,10 @@ public class parserDocsThisDB_test {
 		final String expected ="<w:t>{{</w:t>123456<w:t>Key_name11</w:t>789<w:t>}</w:t>222<w:p>"+
 							   "<w:rPr><w:color w:val=\"FF0000\"/><w:highlight w:val=\"yellow\"/>"+
 							   "333</w:rPr>444</w:p><w:t>}</w:t>44444<w:t>{{Key_name12}}</w:t>"; 
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="<w:t>{{</w:t>123456<w:t>Key_name11</w:t>789<w:t>}</w:t>222<w:p>"+
 							   "<w:rPr>333</w:rPr>444</w:p><w:t>}</w:t>44444<w:t>{{Key_name12}}</w:t>";
-		final String actual = replaÒeText.strSummText(inString);
+		final String actual = repla—ÅeText.strSummText(inString);
 		System.out.println(actual);
 		System.out.println(expected);
 		assertEquals(expected, actual);
@@ -63,9 +63,9 @@ public class parserDocsThisDB_test {
 	public void test_strFindCorrect1() {
 		//fail("Not yet implemented");
 		final String expected ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		final String actual = replaÒeText.strFindCorrect(inString);
+		final String actual = repla—ÅeText.strFindCorrect(inString);
 		assertEquals(expected, actual);
 	}
 	
@@ -73,9 +73,9 @@ public class parserDocsThisDB_test {
 	public void test_strFindCorrect2() {
 		//fail("Not yet implemented");
 		final String expected ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="a123456789a<w:t>{{</w:t>1111<w:t>Key_name10</w:t>2222<w:t>}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		final String actual = replaÒeText.strFindCorrect(inString);
+		final String actual = repla—ÅeText.strFindCorrect(inString);
 		assertEquals(expected, actual);
 	}
 	
@@ -83,9 +83,9 @@ public class parserDocsThisDB_test {
 	public void test_strFindCorrect3() {
 		//fail("Not yet implemented");
 		final String expected ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
 		final String inString ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{</w:t>123456<w:t>Key_name11</w:t>789<w:t>}}</w:t>c123456789c";
-		final String actual = replaÒeText.strFindCorrect(inString);
+		final String actual = repla—ÅeText.strFindCorrect(inString);
 		System.out.println(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
@@ -97,10 +97,10 @@ public class parserDocsThisDB_test {
 		Map<String, String> KeyMap = new HashMap<>();
 		KeyMap.put("Key_name10", "TEST");
 		final String expected ="a123456789a<w:t>TEST</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		replaÒeTextDocs  replaÒeText = new replaÒeTextDocs(name_in_file,name_out_file);
-		replaÒeText.keyList = KeyMap;
+		repla—ÅeTextDocs  repla—ÅeText = new repla—ÅeTextDocs(name_in_file,name_out_file);
+		repla—ÅeText.keyList = KeyMap;
 		final String inString ="a123456789a<w:t>{{Key_name10}}</w:t>d123456789d<w:t>{{Key_name11}}</w:t>c123456789c";
-		final String actual = replaÒeText.strFindCorrect(inString);
+		final String actual = repla—ÅeText.strFindCorrect(inString);
 		System.out.println(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
@@ -185,8 +185,8 @@ public class parserDocsThisDB_test {
 	public void test_connectDB(){
 		try {
         	Properties paramConnection = new Properties();
-    	    paramConnection.setProperty("user", "sysdba");			// ÎÓ„ËÌ ¡ƒ FIREBERD
-    	    paramConnection.setProperty("password", "masterkey"); 	//Ô‡ÓÎ¸ ¡ƒ FIREBERD
+    	    paramConnection.setProperty("user", "sysdba");			// –ª–æ–≥–∏–Ω –ë–î FIREBERD
+    	    paramConnection.setProperty("password", "masterkey"); 	//–ø–∞—Ä–æ–ª—å –ë–î FIREBERD
     	    paramConnection.setProperty("encoding", "WIN1251");
     	    //paramConnection.setProperty("sql_dialect", "3");
 			Class.forName("org.firebirdsql.jdbc.FBDriver");
@@ -194,8 +194,8 @@ public class parserDocsThisDB_test {
 			conn = DriverManager.getConnection("jdbc:firebirdsql:localhost:C:\\DB\\zaria.FDB", paramConnection);
 			//conn = DriverManager.getConnection("jdbc:firebirdsql:localhost:C:\\DB\\don.gdb", paramConnection);
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select CUSTNUM from anothercust"); 	//¬˚ÔÓÎÌˇÂÏ SQL Á‡ÔÓÒ.
-			//ResultSet rs = stmt.executeQuery("select cr_key, cr_cardkey from cards where cr_cardkey < 10000 order by cr_cardkey"); 	//¬˚ÔÓÎÌˇÂÏ SQL Á‡ÔÓÒ.
+			ResultSet rs = stmt.executeQuery("select CUSTNUM from anothercust"); 	//–í—ã–ø–æ–ª–Ω—è–µ–º SQL –∑–∞–ø—Ä–æ—Å.
+			//ResultSet rs = stmt.executeQuery("select cr_key, cr_cardkey from cards where cr_cardkey < 10000 order by cr_cardkey"); 	//–í—ã–ø–æ–ª–Ω—è–µ–º SQL –∑–∞–ø—Ä–æ—Å.
 			int Column =rs.getMetaData().getColumnCount()+1;
 			while(rs.next()) {
 				System.out.println();
@@ -206,7 +206,7 @@ public class parserDocsThisDB_test {
 			conn.close();
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.print(e);
-			//e.printStackTrace();// TODO ¿‚ÚÓÏ‡ÚË˜ÂÒÍË ÒÓÁ‰‡ÌÌ˚È ·ÎÓÍ catch
+			//e.printStackTrace();// TODO –ê–≤—Ç–æ–º–∞—Ç–∏—á–µ—Å–∫–∏ —Å–æ–∑–¥–∞–Ω–Ω—ã–π –±–ª–æ–∫ catch
 			}
 		}
 	

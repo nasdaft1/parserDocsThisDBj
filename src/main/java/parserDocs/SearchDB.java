@@ -18,22 +18,22 @@ public class SearchDB implements Cloneable{
 	public String path_db;
 	private String url;  
 	private Properties paramConnection;
-	// функция проверки соединения с компьютером для уменьшения времени обращения
-	// создает сокет для подключение к компьютеру с БД
+	// С„СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ РєРѕРјРїСЊСЋС‚РµСЂРѕРј РґР»СЏ СѓРјРµРЅСЊС€РµРЅРёСЏ РІСЂРµРјРµРЅРё РѕР±СЂР°С‰РµРЅРёСЏ
+	// СЃРѕР·РґР°РµС‚ СЃРѕРєРµС‚ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёРµ Рє РєРѕРјРїСЊСЋС‚РµСЂСѓ СЃ Р‘Р”
 
 	public SearchDB(String path_db) {
 		this.path_db = path_db;
 		this.paramConnection = new Properties();
-    	this.paramConnection.setProperty("user", "sysdba");			// логин БД FIREBERD
-    	this.paramConnection.setProperty("password", "masterkey"); 	//пароль БД FIREBERD
-    	this.paramConnection.setProperty("encoding", "WIN1251");		//кодировка БД FIREBERD
+    	this.paramConnection.setProperty("user", "sysdba");			// Р»РѕРіРёРЅ Р‘Р” FIREBERD
+    	this.paramConnection.setProperty("password", "masterkey"); 	//РїР°СЂРѕР»СЊ Р‘Р” FIREBERD
+    	this.paramConnection.setProperty("encoding", "WIN1251");		//РєРѕРґРёСЂРѕРІРєР° Р‘Р” FIREBERD
     	this.url = "jdbc:firebirdsql:"+ path_db;
-	    if (checkingPossibleConnection(path_db)) {//проверка пути на компьтере или доступа по ip к компьютеру 
+	    if (checkingPossibleConnection(path_db)) {//РїСЂРѕРІРµСЂРєР° РїСѓС‚Рё РЅР° РєРѕРјРїСЊС‚РµСЂРµ РёР»Рё РґРѕСЃС‚СѓРїР° РїРѕ ip Рє РєРѕРјРїСЊСЋС‚РµСЂСѓ 
 	    	SearchDBconnect();
 	    	}
 	    }
 	
-	public SearchDB() {} // для доступа к классу и методам из JUnit
+	public SearchDB() {} // РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РєР»Р°СЃСЃСѓ Рё РјРµС‚РѕРґР°Рј РёР· JUnit
 	
 	public void SearchDBconnect(){
 		try {
@@ -41,7 +41,7 @@ public class SearchDB implements Cloneable{
     		Connection conn=null;
     		conn = DriverManager.getConnection(url,  paramConnection);
     		stmt = conn.createStatement();
-    		if (conn == null) {System.err.print("->не открылась база данных "+ path_db);}
+    		if (conn == null) {System.err.print("->РЅРµ РѕС‚РєСЂС‹Р»Р°СЃСЊ Р±Р°Р·Р° РґР°РЅРЅС‹С… "+ path_db);}
 			} catch (ClassNotFoundException | SQLException e) {	}
 		}
 	
@@ -50,22 +50,22 @@ public class SearchDB implements Cloneable{
 			@SuppressWarnings("resource")
 			Socket socket = new Socket();
 			socket.connect(new InetSocketAddress(ipAdress, 23), 10);
-			if (socket.isConnected()) { return true; } // есть соединения по 
+			if (socket.isConnected()) { return true; } // РµСЃС‚СЊ СЃРѕРµРґРёРЅРµРЅРёСЏ РїРѕ 
 			} catch (IOException e) { }
-		System.err.print("->нет доступа к компьютеру база данных "+ ipAdress);
-		return false;  // нет соединения или вышла ошибка
+		System.err.print("->РЅРµС‚ РґРѕСЃС‚СѓРїР° Рє РєРѕРјРїСЊСЋС‚РµСЂСѓ Р±Р°Р·Р° РґР°РЅРЅС‹С… "+ ipAdress);
+		return false;  // РЅРµС‚ СЃРѕРµРґРёРЅРµРЅРёСЏ РёР»Рё РІС‹С€Р»Р° РѕС€РёР±РєР°
 		}
 	
-	//Проверка файла на компьютере LOCALHOST
+	//РџСЂРѕРІРµСЂРєР° С„Р°Р№Р»Р° РЅР° РєРѕРјРїСЊСЋС‚РµСЂРµ LOCALHOST
 	public boolean testConnectLocalhostPath(String pathFile) {
 		final File file = new File(pathFile);
 	    if (file.exists()) { 
 	    	return true;}
-	    System.err.print("->необнаружен файла на компьютере "+ pathFile);
-	    return false;  // не найден фаил на копьюиере по данномо пути
+	    System.err.print("->РЅРµРѕР±РЅР°СЂСѓР¶РµРЅ С„Р°Р№Р»Р° РЅР° РєРѕРјРїСЊСЋС‚РµСЂРµ "+ pathFile);
+	    return false;  // РЅРµ РЅР°Р№РґРµРЅ С„Р°РёР» РЅР° РєРѕРїСЊСЋРёРµСЂРµ РїРѕ РґР°РЅРЅРѕРјРѕ РїСѓС‚Рё
 	    }
 	
-	//функция проверки доступа к файлу на компьютере и компьютера в сети
+	//С„СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ РЅР° РєРѕРјРїСЊСЋС‚РµСЂРµ Рё РєРѕРјРїСЊСЋС‚РµСЂР° РІ СЃРµС‚Рё
 	public boolean checkingPossibleConnection(String path_dbConnect) {
 		//path_dbConnect
 		String ip = path_dbConnect.substring(0,path_dbConnect.indexOf(":")).toUpperCase();
@@ -79,7 +79,7 @@ public class SearchDB implements Cloneable{
 		return true;
 		}
    
-	//получить ResultSet с многострочными даннами		
+	//РїРѕР»СѓС‡РёС‚СЊ ResultSet СЃ РјРЅРѕРіРѕСЃС‚СЂРѕС‡РЅС‹РјРё РґР°РЅРЅР°РјРё		
 	public ResultSet requesting_data_list (String command_SQL) {
 		ResultSet rs = null;
 		try {			
@@ -90,45 +90,45 @@ public class SearchDB implements Cloneable{
 		return rs;
 		}
 	
-	//получить ResultSet с одной строкой данных
+	//РїРѕР»СѓС‡РёС‚СЊ ResultSet СЃ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРѕР№ РґР°РЅРЅС‹С…
 	public ResultSet requesting_data_one (String command_SQL) {
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery(command_SQL);
-			if (rs.next()) { } else {System.err.println(command_SQL+"->нет данных");}
+			if (rs.next()) { } else {System.err.println(command_SQL+"->РЅРµС‚ РґР°РЅРЅС‹С…");}
 			} catch (Exception e) {}
 		return rs;
 		}
 	
-	// получение полного адреса строкой
+	// РїРѕР»СѓС‡РµРЅРёРµ РїРѕР»РЅРѕРіРѕ Р°РґСЂРµСЃР° СЃС‚СЂРѕРєРѕР№
 	public String address_format(ResultSet data, int street , int house_num, int bilding, int korpus, int flat_num) {
-		String street_str   = redo_and_check(data, street);  // улица
-		String bilding_str  = redo_and_check(data, bilding); // строение
-		String korpus_str   = redo_and_check(data, korpus);  // корпус здания
-		String flat_num_str = redo_and_check(data, flat_num);// номер здания
+		String street_str   = redo_and_check(data, street);  // СѓР»РёС†Р°
+		String bilding_str  = redo_and_check(data, bilding); // СЃС‚СЂРѕРµРЅРёРµ
+		String korpus_str   = redo_and_check(data, korpus);  // РєРѕСЂРїСѓСЃ Р·РґР°РЅРёСЏ
+		String flat_num_str = redo_and_check(data, flat_num);// РЅРѕРјРµСЂ Р·РґР°РЅРёСЏ
 	    if (!flat_num_str.equals("")) {flat_num_str = "-"     + flat_num_str;}
-        if (!bilding_str.equals(""))  {bilding_str  = " стр." + bilding_str;}
+        if (!bilding_str.equals(""))  {bilding_str  = " СЃС‚СЂ." + bilding_str;}
         if (!korpus_str.equals(""))   {korpus_str   = "\\"    + korpus_str;}
 	    String s = street_str + " "  + redo_and_check(data, house_num) + bilding_str + korpus_str + flat_num_str;
 	    return s;
 	    }
 	
-	// получение полного адреса строкой с дополнительым полем (поселок, село, район)
+	// РїРѕР»СѓС‡РµРЅРёРµ РїРѕР»РЅРѕРіРѕ Р°РґСЂРµСЃР° СЃС‚СЂРѕРєРѕР№ СЃ РґРѕРїРѕР»РЅРёС‚РµР»СЊС‹Рј РїРѕР»РµРј (РїРѕСЃРµР»РѕРє, СЃРµР»Рѕ, СЂР°Р№РѕРЅ)
 	public String address_format(ResultSet data, int street , int house_num, int bilding, int korpus, int flat_num, int district) {
 		String district_str = redo_and_check(data, district);
 		return district_str +" "+ address_format(data, street , house_num, bilding, korpus, flat_num);
 	    }
 		
-	// метод для получение данных определенного (index) поля таблици базы данных
+	// РјРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ (index) РїРѕР»СЏ С‚Р°Р±Р»РёС†Рё Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 	public String redo_and_check(ResultSet data,int index) {
 		String result ="";
 		try {
-			if (data.getObject(index) !=  null) {result = (data.getString(index)).trim(); }// если поле не Null переводим в str и убираем пробелы
+			if (data.getObject(index) !=  null) {result = (data.getString(index)).trim(); }// РµСЃР»Рё РїРѕР»Рµ РЅРµ Null РїРµСЂРµРІРѕРґРёРј РІ str Рё СѓР±РёСЂР°РµРј РїСЂРѕР±РµР»С‹
 			} catch (SQLException e) {}
 		return result;
 		}
 	
-	// релизация клонирования объекта
+	// СЂРµР»РёР·Р°С†РёСЏ РєР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚Р°
     public SearchDB clone() {
     	try {
 			return (SearchDB)super.clone();

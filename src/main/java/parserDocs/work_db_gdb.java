@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class work_db_gdb {
 	
-	public Map<String,String> data_dictionary = new HashMap<String,String>(); //словарь ключей для замены в тексте 
+	public Map<String,String> data_dictionary = new HashMap<String,String>(); //СЃР»РѕРІР°СЂСЊ РєР»СЋС‡РµР№ РґР»СЏ Р·Р°РјРµРЅС‹ РІ С‚РµРєСЃС‚Рµ 
 	private String data_id_name_object;
 	private String id_key;
 	private String id_type_otp;
@@ -21,18 +21,18 @@ public class work_db_gdb {
 	              " from cards where cr_cardkey=" + card;
 		ResultSet data= db.requesting_data_one(command_SQL);
 		if (data == null) {
-			System.err.print("->карточка не найдена");
+			System.err.print("->РєР°СЂС‚РѕС‡РєР° РЅРµ РЅР°Р№РґРµРЅР°");
 			return false;}
-		data_id_name_object =  data.getString(14).trim(); // объект
-		data_dictionary.put("card",     card);   //в словарь добавляется позывной объекта
-		data_dictionary.put("entrance",data.getString(7)); // подъезд
-		data_dictionary.put("floor",   data.getString(6)); // этаж
-		data_dictionary.put("cont",    data.getString(2).trim()); // номер договора
-		data_dictionary.put("phone",   data.getString(13).trim());// телефон закроссированный
-		id_key            = data.getString(1);   // id - для определение типа прибора, список сотрудников, список шлейфов
-		id_type_otp       = data.getString(11);  // id - для определение типа объекта
-		data_dictionary.put("memo1",(data.getString(9)).trim() + '\n' + (data.getString(10)).trim()); //характеристики объекта, уязвимости объекта
-		data_dictionary.put("address_object", db.address_format(data, 15, 4, 5, 12, 8)); // адрес объекта
+		data_id_name_object =  data.getString(14).trim(); // РѕР±СЉРµРєС‚
+		data_dictionary.put("card",     card);   //РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РїРѕР·С‹РІРЅРѕР№ РѕР±СЉРµРєС‚Р°
+		data_dictionary.put("entrance",data.getString(7)); // РїРѕРґСЉРµР·Рґ
+		data_dictionary.put("floor",   data.getString(6)); // СЌС‚Р°Р¶
+		data_dictionary.put("cont",    data.getString(2).trim()); // РЅРѕРјРµСЂ РґРѕРіРѕРІРѕСЂР°
+		data_dictionary.put("phone",   data.getString(13).trim());// С‚РµР»РµС„РѕРЅ Р·Р°РєСЂРѕСЃСЃРёСЂРѕРІР°РЅРЅС‹Р№
+		id_key            = data.getString(1);   // id - РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёРµ С‚РёРїР° РїСЂРёР±РѕСЂР°, СЃРїРёСЃРѕРє СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, СЃРїРёСЃРѕРє С€Р»РµР№С„РѕРІ
+		id_type_otp       = data.getString(11);  // id - РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёРµ С‚РёРїР° РѕР±СЉРµРєС‚Р°
+		data_dictionary.put("memo1",(data.getString(9)).trim() + '\n' + (data.getString(10)).trim()); //С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РѕР±СЉРµРєС‚Р°, СѓСЏР·РІРёРјРѕСЃС‚Рё РѕР±СЉРµРєС‚Р°
+		data_dictionary.put("address_object", db.address_format(data, 15, 4, 5, 12, 8)); // Р°РґСЂРµСЃ РѕР±СЉРµРєС‚Р°
 		return true;
 	}
 	
@@ -40,55 +40,55 @@ public class work_db_gdb {
 		ResultSet data_type_object = db.requesting_data_one("select otp_name from  objtypes where otp_id=" + id_type_otp);
 		String data_type_object_naim = data_type_object.getString(1).trim().toUpperCase();
 		data_dictionary.put("type_object", data_type_object_naim);
-		if (data_type_object_naim.equals("КВАРТИРА") || data_type_object_naim.equals("МХЛИГ")) {
-		     //в словарь добавляется названание объекта для физического лица
+		if (data_type_object_naim.equals("РљР’РђР РўРР Рђ") || data_type_object_naim.equals("РњРҐР›РР“")) {
+		     //РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РЅР°Р·РІР°РЅР°РЅРёРµ РѕР±СЉРµРєС‚Р° РґР»СЏ С„РёР·РёС‡РµСЃРєРѕРіРѕ Р»РёС†Р°
 		     data_dictionary.put("type_object_physical", data_id_name_object);
 		     }
-		else { data_dictionary.put("type_object_legal", data_id_name_object);} 				            //в словарь добавляется названание объекта для юридического лица
+		else { data_dictionary.put("type_object_legal", data_id_name_object);} 				            //РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РЅР°Р·РІР°РЅР°РЅРёРµ РѕР±СЉРµРєС‚Р° РґР»СЏ СЋСЂРёРґРёС‡РµСЃРєРѕРіРѕ Р»РёС†Р°
 	}
 
 	public void SelectXo(SearchDB db) throws SQLException {
-		//создание списка с данными ФИО, статус, адрес, телефоны
+		//СЃРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР° СЃ РґР°РЅРЅС‹РјРё Р¤РРћ, СЃС‚Р°С‚СѓСЃ, Р°РґСЂРµСЃ, С‚РµР»РµС„РѕРЅС‹
 		int line =0;
-		ResultSet data = db.requesting_data_list("select * from  keymen where keymen.km_cr_key=" + id_key); //Запрос на список сотрудников
+		ResultSet data = db.requesting_data_list("select * from  keymen where keymen.km_cr_key=" + id_key); //Р—Р°РїСЂРѕСЃ РЅР° СЃРїРёСЃРѕРє СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ
 		while (data.next()) {
 		    ++line;
-		  	String sLine =String.valueOf(line); // в словарь добавляется ФИО сотрудника
+		  	String sLine =String.valueOf(line); // РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ Р¤РРћ СЃРѕС‚СЂСѓРґРЅРёРєР°
 		  	data_dictionary.put("name"+sLine     ,data.getString(3).trim() +" "+ data.getString(4).trim() + " " + data.getString(5).trim());
-			data_dictionary.put("position"+sLine ,db.redo_and_check(data ,10)); // в словарь добавляется комментарий по человеку
-			data_dictionary.put("address"+sLine  ,data.getString(8).trim());  // в словарь добавляется адрес человека
-			data_dictionary.put("phone"+sLine    ,data.getString(9).trim());  // в словарь добавляется телефон человека
+			data_dictionary.put("position"+sLine ,db.redo_and_check(data ,10)); // РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РєРѕРјРјРµРЅС‚Р°СЂРёР№ РїРѕ С‡РµР»РѕРІРµРєСѓ
+			data_dictionary.put("address"+sLine  ,data.getString(8).trim());  // РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ Р°РґСЂРµСЃ С‡РµР»РѕРІРµРєР°
+			data_dictionary.put("phone"+sLine    ,data.getString(9).trim());  // РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ С‚РµР»РµС„РѕРЅ С‡РµР»РѕРІРµРєР°
 			}
 		}
 	
 	public void SelectUo(SearchDB db) throws SQLException {
-		//создание списка с типом оконечного устройства
+		//СЃРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР° СЃ С‚РёРїРѕРј РѕРєРѕРЅРµС‡РЅРѕРіРѕ СѓСЃС‚СЂРѕР№СЃС‚РІР°
 		ResultSet data;
 		data = db.requesting_data_one("select uo.uo_name from  line, uo where uo.uo_ln_id = line.ln_id and line.ln_cr_key="+id_key);
 		data_dictionary.put("type_ou",data.getString(1).trim()); 
 		}
 	
 	public void SelectObjects(SearchDB db) throws SQLException {
-		//создать список шлейфов
-		ResultSet data = db.requesting_data_list("select sh_number,sh_name from  sh where sh.sh_cr_key=" + id_key); //Запрос на список шлейфов
+		//СЃРѕР·РґР°С‚СЊ СЃРїРёСЃРѕРє С€Р»РµР№С„РѕРІ
+		ResultSet data = db.requesting_data_list("select sh_number,sh_name from  sh where sh.sh_cr_key=" + id_key); //Р—Р°РїСЂРѕСЃ РЅР° СЃРїРёСЃРѕРє С€Р»РµР№С„РѕРІ
 		int line = 0;
 		while (data.next()) {
 		    ++line;
 		   	String sLine2 =String.valueOf(line);
-		    data_dictionary.put("Shn" + sLine2 ,String.valueOf(data.getInt(1)+1)); // номер шлейфа
-		    data_dictionary.put("Shm" + sLine2 , data.getString(2)); // описание шлейфа
+		    data_dictionary.put("Shn" + sLine2 ,String.valueOf(data.getInt(1)+1)); // РЅРѕРјРµСЂ С€Р»РµР№С„Р°
+		    data_dictionary.put("Shm" + sLine2 , data.getString(2)); // РѕРїРёСЃР°РЅРёРµ С€Р»РµР№С„Р°
 		    }
 		}
 	
 	public void read_data_gdb(String path_db, String  card)  throws SQLException {
 		result = false;
 		SearchDB db = new SearchDB(path_db);
-		if (SelectCards(db, card)) { //если в первой таблице не найдены ключи то работать с остальными таблицами не имеет смысла
+		if (SelectCards(db, card)) { //РµСЃР»Рё РІ РїРµСЂРІРѕР№ С‚Р°Р±Р»РёС†Рµ РЅРµ РЅР°Р№РґРµРЅС‹ РєР»СЋС‡Рё С‚Рѕ СЂР°Р±РѕС‚Р°С‚СЊ СЃ РѕСЃС‚Р°Р»СЊРЅС‹РјРё С‚Р°Р±Р»РёС†Р°РјРё РЅРµ РёРјРµРµС‚ СЃРјС‹СЃР»Р°
 			SelectOtp_name(db);
 			SelectXo(db);
 			SelectObjects(db);
-			System.out.print("->карточка обработана");
-			result = true; //true - карточка обработана
+			System.out.print("->РєР°СЂС‚РѕС‡РєР° РѕР±СЂР°Р±РѕС‚Р°РЅР°");
+			result = true; //true - РєР°СЂС‚РѕС‡РєР° РѕР±СЂР°Р±РѕС‚Р°РЅР°
 			}
     	}
 	}

@@ -17,19 +17,19 @@ public class data_viev {
 
 	public void viev_selection_(String path_db, String card, String pult, String  directories) throws SQLException{
 		String path_db_type = "";
-		int path_db_length = path_db.length(); // определение длины пути с файлом
+		int path_db_length = path_db.length(); // РѕРїСЂРµРґРµР»РµРЅРёРµ РґР»РёРЅС‹ РїСѓС‚Рё СЃ С„Р°Р№Р»РѕРј
 		if (path_db_length > 4) {
-			path_db_type = path_db.substring(path_db_length - 4); // определение типа файла
+			path_db_type = path_db.substring(path_db_length - 4); // РѕРїСЂРµРґРµР»РµРЅРёРµ С‚РёРїР° С„Р°Р№Р»Р°
 			}
 		
-		if (path_db_type.equals(".fdb")) { // для работы с типом базы данных .fdb
+		if (path_db_type.equals(".fdb")) { // РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РёРїРѕРј Р±Р°Р·С‹ РґР°РЅРЅС‹С… .fdb
 			work_db_fdb work_db = new work_db_fdb();
 			work_db.read_data_fdb(path_db, card);
 			data_dictionary1 = work_db.data_dictionary;
 			result = work_db.result;
 			}
 		
-		if (path_db_type.equals(".gdb")) { // для работы с типом базы данных .gdb
+		if (path_db_type.equals(".gdb")) { // РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РёРїРѕРј Р±Р°Р·С‹ РґР°РЅРЅС‹С… .gdb
 			work_db_gdb work_db = new work_db_gdb();
 			work_db.read_data_gdb(path_db, card);
 			data_dictionary1 = work_db.data_dictionary;
@@ -38,12 +38,12 @@ public class data_viev {
 			
 		if (((path_db_type.equals(".fdb")) || (path_db_type.equals(".gdb"))) && (result == true)) {
 			String path_and_name_file = directories + card + ".docx";
-			replaсeTextDocs a = new replaсeTextDocs(original_docx_name, path_and_name_file);
-			DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyг."); //определение формата данных
-			a.keyList = data_dictionary1; 						// вставляем в класс словарь и
-			a.keyList.put("ed",pult.toUpperCase());				// в словарь добавляем название пульта 
-			a.keyList.put("data",dateFormat.format(new Date()));// Текущая дата со временем
-			a.replaсeText();
+			replaСЃeTextDocs a = new replaСЃeTextDocs(original_docx_name, path_and_name_file);
+			DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyРі."); //РѕРїСЂРµРґРµР»РµРЅРёРµ С„РѕСЂРјР°С‚Р° РґР°РЅРЅС‹С…
+			a.keyList = data_dictionary1; 						// РІСЃС‚Р°РІР»СЏРµРј РІ РєР»Р°СЃСЃ СЃР»РѕРІР°СЂСЊ Рё
+			a.keyList.put("ed",pult.toUpperCase());				// РІ СЃР»РѕРІР°СЂСЊ РґРѕР±Р°РІР»СЏРµРј РЅР°Р·РІР°РЅРёРµ РїСѓР»СЊС‚Р° 
+			a.keyList.put("data",dateFormat.format(new Date()));// РўРµРєСѓС‰Р°СЏ РґР°С‚Р° СЃРѕ РІСЂРµРјРµРЅРµРј
+			a.replaСЃeText();
 			}
 		}
 	}

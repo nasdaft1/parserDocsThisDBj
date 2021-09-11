@@ -14,36 +14,36 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 
-public class replaсeTextDocs {
-	// класс для обработки WORD DOCS файла, поиск ключей и замена их данных из словаря текст
-	private String fileInDocx; //имя файла который будет читаться
-	private String fileOutDocx;//имя файла в который будет сформированный 
-	public Map<String, String> keyList = new HashMap<String,String>();; //словарь ключей для замены в тексте
+public class replaСЃeTextDocs {
+	// РєР»Р°СЃСЃ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё WORD DOCS С„Р°Р№Р»Р°, РїРѕРёСЃРє РєР»СЋС‡РµР№ Рё Р·Р°РјРµРЅР° РёС… РґР°РЅРЅС‹С… РёР· СЃР»РѕРІР°СЂСЏ С‚РµРєСЃС‚
+	private String fileInDocx; //РёРјСЏ С„Р°Р№Р»Р° РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ С‡РёС‚Р°С‚СЊСЃСЏ
+	private String fileOutDocx;//РёРјСЏ С„Р°Р№Р»Р° РІ РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ СЃС„РѕСЂРјРёСЂРѕРІР°РЅРЅС‹Р№ 
+	public Map<String, String> keyList = new HashMap<String,String>();; //СЃР»РѕРІР°СЂСЊ РєР»СЋС‡РµР№ РґР»СЏ Р·Р°РјРµРЅС‹ РІ С‚РµРєСЃС‚Рµ
 	
-	public replaсeTextDocs(String fileInDocx, String fileOutDocx) {
+	public replaСЃeTextDocs(String fileInDocx, String fileOutDocx) {
 		this.fileInDocx = fileInDocx;  
 		this.fileOutDocx= fileOutDocx;
 		}
 	
 	public String strSummText(String strKitPart){ 
-		//функция сумирует части текста {{XX.YY..ZZ}} в целый текст {{XXYYZZ}} 
-		int startPosition = strKitPart.indexOf("<w:t>")+5; 	 			//поиск начала текста
-		int endPosition = strKitPart.indexOf("</w:t>",startPosition); 	//поиск конца текста
+		//С„СѓРЅРєС†РёСЏ СЃСѓРјРёСЂСѓРµС‚ С‡Р°СЃС‚Рё С‚РµРєСЃС‚Р° {{XX.YY..ZZ}} РІ С†РµР»С‹Р№ С‚РµРєСЃС‚ {{XXYYZZ}} 
+		int startPosition = strKitPart.indexOf("<w:t>")+5; 	 			//РїРѕРёСЃРє РЅР°С‡Р°Р»Р° С‚РµРєСЃС‚Р°
+		int endPosition = strKitPart.indexOf("</w:t>",startPosition); 	//РїРѕРёСЃРє РєРѕРЅС†Р° С‚РµРєСЃС‚Р°
 		String PathText ="";
-		//проверка на наличие ошибки форматирования в ключевом слове
-		if (strKitPart.indexOf("</w:p>") == -1) { // поиск 
+		//РїСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ РѕС€РёР±РєРё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ РІ РєР»СЋС‡РµРІРѕРј СЃР»РѕРІРµ
+		if (strKitPart.indexOf("</w:p>") == -1) { // РїРѕРёСЃРє 
 			while (startPosition != 4)  {
-				PathText =  PathText+ strKitPart.substring(startPosition,endPosition); //вырезание текста и суммироваие с найденым
-				startPosition = strKitPart.indexOf("<w:t>",startPosition)+5; //поиск начала текста
-				endPosition = strKitPart.indexOf("</w:t>",startPosition);	 //поиск конца текста
+				PathText =  PathText+ strKitPart.substring(startPosition,endPosition); //РІС‹СЂРµР·Р°РЅРёРµ С‚РµРєСЃС‚Р° Рё СЃСѓРјРјРёСЂРѕРІР°РёРµ СЃ РЅР°Р№РґРµРЅС‹Рј
+				startPosition = strKitPart.indexOf("<w:t>",startPosition)+5; //РїРѕРёСЃРє РЅР°С‡Р°Р»Р° С‚РµРєСЃС‚Р°
+				endPosition = strKitPart.indexOf("</w:t>",startPosition);	 //РїРѕРёСЃРє РєРѕРЅС†Р° С‚РµРєСЃС‚Р°
 				}
 			}
-		else {//замена XML кода для подсветки ошибки - цветом красным на желтом фоне 
+		else {//Р·Р°РјРµРЅР° XML РєРѕРґР° РґР»СЏ РїРѕРґСЃРІРµС‚РєРё РѕС€РёР±РєРё - С†РІРµС‚РѕРј РєСЂР°СЃРЅС‹Рј РЅР° Р¶РµР»С‚РѕРј С„РѕРЅРµ 
 			PathText = strKitPart.replaceAll("<w:rPr>", "<w:rPr><w:color w:val=\"FF0000\"/><w:highlight w:val=\"yellow\"/>");
 			return PathText;
 			}
-		String key = keyList.get(PathText.substring(2, PathText.length()-2)); // поиск даных в коллекции HashMap 
-		if (key != null) { PathText = key;}  // замена из колеции данными по ключам
+		String key = keyList.get(PathText.substring(2, PathText.length()-2)); // РїРѕРёСЃРє РґР°РЅС‹С… РІ РєРѕР»Р»РµРєС†РёРё HashMap 
+		if (key != null) { PathText = key;}  // Р·Р°РјРµРЅР° РёР· РєРѕР»РµС†РёРё РґР°РЅРЅС‹РјРё РїРѕ РєР»СЋС‡Р°Рј
 		else { PathText = "";}
 		return "<w:t>"+PathText+"</w:t>";
 		}
@@ -51,20 +51,20 @@ public class replaсeTextDocs {
 	public String strFindCorrect(String str){
 		String strNoSummText ="";
 		int old_startPosition =0;
-		int startPosition = str.indexOf("<w:t>{{");					  //поиск начала ключа {{
-		String str1 = str.substring(0,startPosition);				  //формирования начала строки до первого ключа
-		int endPosition = str.indexOf("}}</w:t>", startPosition)+8;	  //поиск конца ключа  }}
-		while (startPosition != -1)  {								  //поиск всех ключей перебором строки по участкам {{ }}
-			strNoSummText = str.substring(startPosition,endPosition); //формирование из частей ключацелый ключ 
-			startPosition = str.indexOf("<w:t>{{", endPosition);      //поиск начальной позиции
+		int startPosition = str.indexOf("<w:t>{{");					  //РїРѕРёСЃРє РЅР°С‡Р°Р»Р° РєР»СЋС‡Р° {{
+		String str1 = str.substring(0,startPosition);				  //С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РЅР°С‡Р°Р»Р° СЃС‚СЂРѕРєРё РґРѕ РїРµСЂРІРѕРіРѕ РєР»СЋС‡Р°
+		int endPosition = str.indexOf("}}</w:t>", startPosition)+8;	  //РїРѕРёСЃРє РєРѕРЅС†Р° РєР»СЋС‡Р°  }}
+		while (startPosition != -1)  {								  //РїРѕРёСЃРє РІСЃРµС… РєР»СЋС‡РµР№ РїРµСЂРµР±РѕСЂРѕРј СЃС‚СЂРѕРєРё РїРѕ СѓС‡Р°СЃС‚РєР°Рј {{ }}
+			strNoSummText = str.substring(startPosition,endPosition); //С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ РёР· С‡Р°СЃС‚РµР№ РєР»СЋС‡Р°С†РµР»С‹Р№ РєР»СЋС‡ 
+			startPosition = str.indexOf("<w:t>{{", endPosition);      //РїРѕРёСЃРє РЅР°С‡Р°Р»СЊРЅРѕР№ РїРѕР·РёС†РёРё
 			if (startPosition != -1) {								  //
-				str1 = str1+ strSummText(strNoSummText) + str.substring(endPosition, startPosition);  //формирование ключа+межстрочного диапазона данных
-				endPosition = str.indexOf("}}</w:t>",startPosition)+8;// поиск послежней позиции
-				old_startPosition = startPosition;                    //переменная для правельного формирования последнего ключа
+				str1 = str1+ strSummText(strNoSummText) + str.substring(endPosition, startPosition);  //С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ РєР»СЋС‡Р°+РјРµР¶СЃС‚СЂРѕС‡РЅРѕРіРѕ РґРёР°РїР°Р·РѕРЅР° РґР°РЅРЅС‹С…
+				endPosition = str.indexOf("}}</w:t>",startPosition)+8;// РїРѕРёСЃРє РїРѕСЃР»РµР¶РЅРµР№ РїРѕР·РёС†РёРё
+				old_startPosition = startPosition;                    //РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїСЂР°РІРµР»СЊРЅРѕРіРѕ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РєР»СЋС‡Р°
 				}
 			else {	
-				strNoSummText = str.substring(old_startPosition,endPosition);						//формирование ключа
-				str1 = str1+ strSummText(strNoSummText)+  str.substring(endPosition,str.length());} //формирование ключа+последнего диапазона данных
+				strNoSummText = str.substring(old_startPosition,endPosition);						//С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ РєР»СЋС‡Р°
+				str1 = str1+ strSummText(strNoSummText)+  str.substring(endPosition,str.length());} //С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ РєР»СЋС‡Р°+РїРѕСЃР»РµРґРЅРµРіРѕ РґРёР°РїР°Р·РѕРЅР° РґР°РЅРЅС‹С…
 			}
 		return str1;
 		}
@@ -73,10 +73,10 @@ public class replaсeTextDocs {
 		BufferedInputStream bufIn = new BufferedInputStream(is);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BufferedOutputStream bos = new BufferedOutputStream(baos);
-		int c = bufIn.read(); //чтение из файла
+		int c = bufIn.read(); //С‡С‚РµРЅРёРµ РёР· С„Р°Р№Р»Р°
 		while (c != -1) {
-			bos.write(c);	  //запись в массив
-			c = bufIn.read(); //чтение из файла
+			bos.write(c);	  //Р·Р°РїРёСЃСЊ РІ РјР°СЃСЃРёРІ
+			c = bufIn.read(); //С‡С‚РµРЅРёРµ РёР· С„Р°Р№Р»Р°
 			}
 		bos.flush();
 		baos.flush();
@@ -84,22 +84,22 @@ public class replaсeTextDocs {
 		return baos.toByteArray();
 		}
 	
-	public void  replaсeText() { //процедура чтения, раз архивирования, обработки и за архивировать и сохранить фаил в DOCS 
+	public void  replaСЃeText() { //РїСЂРѕС†РµРґСѓСЂР° С‡С‚РµРЅРёСЏ, СЂР°Р· Р°СЂС…РёРІРёСЂРѕРІР°РЅРёСЏ, РѕР±СЂР°Р±РѕС‚РєРё Рё Р·Р° Р°СЂС…РёРІРёСЂРѕРІР°С‚СЊ Рё СЃРѕС…СЂР°РЅРёС‚СЊ С„Р°РёР» РІ DOCS 
 		try {	
 			FileInputStream inputStream = new FileInputStream(fileInDocx);
 			FileOutputStream outputStream = new FileOutputStream(fileOutDocx);
 			ZipInputStream zipInputS = new ZipInputStream(inputStream );
 			ZipOutputStream zipOutputS = new ZipOutputStream(outputStream);
 		    ZipEntry entry = null;
-		    while ((entry = zipInputS.getNextEntry()) != null) {					  //перебор файлов в архиве zip файла
-		    	byte[] bytes =  getBytesFromInputStream( zipInputS, entry.getSize() );//записываем вмассив bytes из файла в архиве
+		    while ((entry = zipInputS.getNextEntry()) != null) {					  //РїРµСЂРµР±РѕСЂ С„Р°Р№Р»РѕРІ РІ Р°СЂС…РёРІРµ zip С„Р°Р№Р»Р°
+		    	byte[] bytes =  getBytesFromInputStream( zipInputS, entry.getSize() );//Р·Р°РїРёСЃС‹РІР°РµРј РІРјР°СЃСЃРёРІ bytes РёР· С„Р°Р№Р»Р° РІ Р°СЂС…РёРІРµ
 				//log.debug("Extracting " + entry.getName());
-				if (entry.getName().equals("word/document.xml")) { // выполняем часть кода с файлом который соодержит ключи в XML фале 
-				    String str = new String(bytes, "UTF-8");       // переводим буфер в строку str 
-				    bytes = strFindCorrect(str).getBytes("UTF-8"); // обрабатываем строку для поиска ключей и замены на данные и обновляем массив 
+				if (entry.getName().equals("word/document.xml")) { // РІС‹РїРѕР»РЅСЏРµРј С‡Р°СЃС‚СЊ РєРѕРґР° СЃ С„Р°Р№Р»РѕРј РєРѕС‚РѕСЂС‹Р№ СЃРѕРѕРґРµСЂР¶РёС‚ РєР»СЋС‡Рё РІ XML С„Р°Р»Рµ 
+				    String str = new String(bytes, "UTF-8");       // РїРµСЂРµРІРѕРґРёРј Р±СѓС„РµСЂ РІ СЃС‚СЂРѕРєСѓ str 
+				    bytes = strFindCorrect(str).getBytes("UTF-8"); // РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ РґР»СЏ РїРѕРёСЃРєР° РєР»СЋС‡РµР№ Рё Р·Р°РјРµРЅС‹ РЅР° РґР°РЅРЅС‹Рµ Рё РѕР±РЅРѕРІР»СЏРµРј РјР°СЃСЃРёРІ 
 				}
-				zipOutputS.putNextEntry(entry); //запись названия файла в архиве 
-				zipOutputS.write(bytes);		//запись массива в фаил в архиве
+				zipOutputS.putNextEntry(entry); //Р·Р°РїРёСЃСЊ РЅР°Р·РІР°РЅРёСЏ С„Р°Р№Р»Р° РІ Р°СЂС…РёРІРµ 
+				zipOutputS.write(bytes);		//Р·Р°РїРёСЃСЊ РјР°СЃСЃРёРІР° РІ С„Р°РёР» РІ Р°СЂС…РёРІРµ
 		    }
 		    zipInputS.close();
 		    zipOutputS.close();
